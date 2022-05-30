@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "pizza-gan"
+version = "0.1.0"
+description = ""
+authors = ["Daniel Varoli <daniel.varoli@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+google-search-results = "^2.4.1"
+loguru = "^0.6.0"
+requests = "^2.27.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+black = "^22.3.0"
+isort = "^5.10.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
