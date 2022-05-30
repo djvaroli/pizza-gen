@@ -48,6 +48,9 @@ def download_image(url: str, filename: str):
     Args:
         url (str): remote location of the image file.
         filename (str): name of file to save image under on local disk.
+    
+    Raises:
+        InvalidURL: if an invalid URL is provided.
     """
     try:
         r = requests.get(url, stream=True)
@@ -61,10 +64,14 @@ def download_image(url: str, filename: str):
         # Set decode_content value to True, otherwise the downloaded image file's size will be zero.
         r.raw.decode_content = True
 
-        with open(filename, "wb") as f:
-            shutil.copyfileobj(r.raw, f)
-
-        logger.info(f"Image `{filename}` successfully downloaded.")
+        try:
+            with open(filename, "wb") as f:
+                shutil.copyfileobj(r.raw, f)
+            logger.info(f"Image `{filename}` successfully downloaded.")
+            
+        except FileNotFoundError as e:
+            logger.error(f"An error occurred when downloading {filename}. Message: {e}.")
+    
     else:
         logger.error(
             f"Could not download image {filename}. Received {r.status_code} status code."

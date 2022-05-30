@@ -57,8 +57,9 @@ def download_search_results(
     for blob_idx, search_blob in enumerate(search_results):
         img_url = search_blob["original"]
         title = search_blob["title"]
+        title = title.replace("/", "_")  # otherwise this will mess with the path in some cases
         download_image(img_url, f"{directory}/{title}.png")
-    
+            
     return
 
 
