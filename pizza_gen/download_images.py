@@ -41,7 +41,7 @@ def search_images(
     
     search = GoogleSearch(params)
     results = search.get_dict()
-    return results["images_results"]
+    return results.get("images_results", list())
 
 
 def download_search_results(
@@ -91,7 +91,7 @@ if __name__ == "__main__":
     
     with tqdm(range(start_page, start_page + n_pages), total=n_pages) as pbar:
         for page_number in pbar:
-            pbar.set_description("Downloading results from page {page_number}")
+            pbar.set_description(f"Downloading results from page {page_number}")
             search_results = search_images(query, page_number)
             download_search_results(search_results, str(directory))
 
