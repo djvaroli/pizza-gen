@@ -33,7 +33,7 @@ def search_images(
     params = {
         "api_key": api_key,
         "engine": "google",
-        "ijn": str(page_number),
+        "ijn": page_number,
         "google_domain": google_domain,
         "tbm": tbm,
         "q": query
@@ -91,6 +91,7 @@ if __name__ == "__main__":
     
     with tqdm(range(start_page, start_page + n_pages), total=n_pages) as pbar:
         for page_number in pbar:
+            pbar.set_description("Downloading results from page {page_number}")
             search_results = search_images(query, page_number)
             download_search_results(search_results, str(directory))
 
