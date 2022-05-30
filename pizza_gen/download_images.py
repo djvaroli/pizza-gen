@@ -46,12 +46,14 @@ def search_images(
 
 def download_search_results(
     search_results: typing.List[typing.Dict],
-    directory: str
+    directory: str,
+    timeout: float = 10
 ):
     """Downloads images from a google given a search query.
 
     Args:
         search_results (str): google search query.
+        timeout (float, optional): time before canceling request if it's taking too long.
     """
     
     for blob_idx, search_blob in enumerate(search_results):
@@ -59,7 +61,7 @@ def download_search_results(
         title = search_blob["title"]
         title = title.replace("/", "_")  # otherwise this will mess with the path in some cases
         try:
-            download_image(img_url, f"{directory}/{title}.png")
+            download_image(img_url, f"{directory}/{title}.png", timeout=timeout)
         except Exception as e:
             logger.error(f"An unknown error has occurred. Message: {e}.")
             
@@ -72,6 +74,7 @@ if __name__ == "__main__":
     parser.add_argument("-q", "--query", help="Search query.", type=str, required=True, nargs="+")
     parser.add_argument("--start_page", help="First page to fetch results from.", type=int, default=0)
     parser.add_argument("--n_pages", help="Number of pages to search through.", type=int, default=10)
+    parser.add_argument("--timeout", default=10, help="Time, in seconds, before canceling a request.", type=float)
     
     args = parser.parse_args()
     

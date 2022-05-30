@@ -42,18 +42,20 @@ logger.add(
 )
 
 
-def download_image(url: str, filename: str):
+def download_image(url: str, filename: str, timeout: float = 10):
     """Downloads an image from a url to local disk under the specified file name.
 
     Args:
         url (str): remote location of the image file.
         filename (str): name of file to save image under on local disk.
-    
+        timeout (float, optional): time before canceling request if it's taking too long.
+        
     Raises:
         InvalidURL: if an invalid URL is provided.
+        FileNotFoundError: if an error occurs when saving the image.
     """
     try:
-        r = requests.get(url, stream=True)
+        r = requests.get(url, stream=True, timeout=timeout)
     except InvalidURL as e:
         logger.error(
             f"Could not download image {filename}. An invalid URL was provided. {e}."
