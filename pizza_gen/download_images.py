@@ -2,6 +2,7 @@ import os
 import typing
 from argparse import ArgumentParser
 import json
+from pathlib import Path
 
 from serpapi import GoogleSearch
 from tqdm import tqdm
@@ -73,7 +74,10 @@ if __name__ == "__main__":
     query = " ".join(args.query)
     start_page = args.start_page
     n_pages = args.n_pages
-    directory = "_".join(query.split(" "))
+    directory = Path("_".join(query.split(" "))).resolve()
+    
+    if not directory.exists():
+        directory.mkdir()
     
     search_config = args.__dict__
     logger.info(search_config)
