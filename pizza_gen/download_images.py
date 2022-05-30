@@ -5,6 +5,7 @@ import json
 
 from serpapi import GoogleSearch
 from tqdm import tqdm
+from loguru import logger
 
 from data_utils import download_image
 
@@ -63,22 +64,24 @@ def download_search_results(
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("-q", "--query", help="Search query.", type=str, required=True)
+    parser.add_argument("-q", "--query", help="Search query.", type=str, required=True, nargs="+")
     parser.add_argument("--start_page", help="First page to fetch results from.", type=int, default=0)
     parser.add_argument("--n_pages", help="Number of pages to search through.", type=int, default=10)
     
     args = parser.parse_args()
     
-    query = args.query    
+    query = " ".join(args.query)
     start_page = args.start_page
     n_pages = args.n_pages
     directory = "_".join(query.split(" "))
     
     search_config = args.__dict__
-    with tqdm(range(start_page, start_page + n_pages), total=n_pages) as pbar:
-        for page_number in pbar:
-            search_results = search_images(query, page_number)
-            download_search_results(search_results, directory)
+    logger.info(search_config)
+    
+    # with tqdm(range(start_page, start_page + n_pages), total=n_pages) as pbar:
+    #     for page_number in pbar:
+    #         search_results = search_images(query, page_number)
+    #         download_search_results(search_results, directory)
 
     config_fp = f"{directory}/search_config.json"
     with open(config_fp, "w+") as f:
