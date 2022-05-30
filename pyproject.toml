@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pizza-gan"
+name = "pizza-gen"
 version = "0.1.0"
 description = ""
 authors = ["Daniel Varoli <daniel.varoli@gmail.com>"]
