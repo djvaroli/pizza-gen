@@ -59,7 +59,7 @@ def download_image(url: str, filename: str):
             f"Could not download image {filename}. An invalid URL was provided. {e}."
         )
         return
-
+    
     if r.status_code == 200:
         # Set decode_content value to True, otherwise the downloaded image file's size will be zero.
         r.raw.decode_content = True
@@ -71,7 +71,7 @@ def download_image(url: str, filename: str):
             
         except FileNotFoundError as e:
             logger.error(f"An error occurred when downloading {filename}. Message: {e}.")
-    
+        
     else:
         logger.error(
             f"Could not download image {filename}. Received {r.status_code} status code."
