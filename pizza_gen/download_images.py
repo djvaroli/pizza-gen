@@ -82,10 +82,10 @@ if __name__ == "__main__":
     search_config = args.__dict__
     logger.info(search_config)
     
-    # with tqdm(range(start_page, start_page + n_pages), total=n_pages) as pbar:
-    #     for page_number in pbar:
-    #         search_results = search_images(query, page_number)
-    #         download_search_results(search_results, directory)
+    with tqdm(range(start_page, start_page + n_pages), total=n_pages) as pbar:
+        for page_number in pbar:
+            search_results = search_images(query, page_number)
+            download_search_results(search_results, str(directory))
 
     config_fp = f"{directory}/search_config.json"
     with open(config_fp, "w+") as f:
